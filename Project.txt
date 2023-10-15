@@ -1,1 +1,2 @@
 I AM IN PROJECT.TXT FILE 
+This line is a change occur in newBranch 

@@ -1,0 +1,73 @@
+post/read/6786325f0f3dceae35c2ed80
+
+
+post id 678685877dfe19605b055cd7
+
+{"_id": "678657168d236094fde8077d",
+            "visibility": "public",
+            "content": "this post is public",
+            "user": "6786325f0f3dceae35c2ed80",
+            "createdAt": "2025-01-14T12:22:46.090Z",
+            "updatedAt": "2025-01-14T12:22:46.090Z",
+            "__v": 0
+        },
+        {
+            "_id": "678672fd8d236094fde80781",
+            "visibility": "public",
+            "content": "this is third post",
+            "user": "6786325f0f3dceae35c2ed80",
+            "createdAt": "2025-01-14T14:21:49.775Z",
+            "updatedAt": "2025-01-14T14:21:49.775Z",
+            "__v": 0
+        },
+        {
+            "_id": "678673078d236094fde80783",
+            "visibility": "public",
+            "content": "this is fourth post",
+            "user": "6786325f0f3dceae35c2ed80",
+            "createdAt": "2025-01-14T14:21:59.197Z",
+            "updatedAt": "2025-01-14T14:21:59.197Z",
+            "__v": 0
+        },
+        {
+            "_id": "678685877dfe19605b055cd7",
+            "visibility": "private",
+            "content": "sorry this is my third post",
+            "user": "678634e272423ae52dc2efaa",
+            "createdAt": "2025-01-14T15:40:55.999Z",
+            "updatedAt": "2025-01-14T15:57:47.495Z",
+            "__v": 0
+        },
+        {
+            "_id": "678685927dfe19605b055cd9",
+            "visibility": "public",
+            "content": "this is me udit, second post here",
+            "user": "678634e272423ae52dc2efaa",
+            "createdAt": "2025-01-14T15:41:06.187Z",
+            "updatedAt": "2025-01-14T15:41:06.187Z",
+            "__v": 0
+        }
+
+
+# users db
+"users": [
+        {
+            "_id": "6786325f0f3dceae35c2ed80",
+            "username": "rahul",
+            "email": "abc@gmail.com",
+            "createdAt": "2025-01-14T09:46:07.576Z",
+            "updatedAt": "2025-01-14T09:46:07.576Z",
+            "__v": 0
+        },
+        {
+            "_id": "678634e272423ae52dc2efaa",
+            "username": "uditj",
+            "email": "abcd@gmail.com",
+            "createdAt": "2025-01-14T09:56:50.968Z",
+            "updatedAt": "2025-01-14T09:56:50.968Z",
+            "__v": 0
+        }
+    ]
+    
+
+    aman= http://localhost:3000/user/details?id=678691593a48b460394992f8

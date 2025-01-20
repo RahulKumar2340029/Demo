@@ -2,20 +2,43 @@ const Post = require('../models/post')
 const User = require('../models/user')
 
 async function createPost(req, res) {
-    const { content, visibility } = req.body;
+    console.log('entered in createpostroute')
+    const { title, content, visibility, emails } = req.body;
     const { userId } = req.query;
 
-    if (!userId || !content) {
+    if (!userId || !content || !title) {
         return res.status(400).json({ success: false, msg: "userid and content required" })
     }
-    console.log(content, visibility, userId);
+    console.log(title , content, visibility, userId);
 
     try {
         const newPost = new Post({
+            title,
             content,
             visibility,
-            user: userId,  // assign userId from the request
+            user: userId,  
         });
+
+        if (emails && emails.length > 0) {
+            const uniqueEmails = [...new Set(emails)]; 
+            
+            for (const email of uniqueEmails) {
+                const collaborator = await User.findOne({ email });
+                
+                if (!collaborator) {
+                    return res.status(400).json({ success: false, msg: `Collaborator with email ${email} does not exist` });
+                }
+
+                if (collaborator._id.toString() === userId.toString()) {
+                    return res.status(400).json({ success: false, msg: "You can't put yourself as a collaborator" });
+                }
+
+                newPost.collaborators.push({
+                    email: collaborator.email,
+                    userId: collaborator._id,
+                });
+            }
+        }
 
         await newPost.save();
 
@@ -26,9 +49,32 @@ async function createPost(req, res) {
     }
 }
 
-async function getAllPosts(req, res) {
+
+
+async function getAllPublicPosts(req, res) {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find({
+            visibility: { $ne: 'private' }
+        });
+
+        if (!posts || posts.length === 0) {
+            return res.status(404).json({ success: false, msg: 'No posts found' });
+        }
+
+        // Respond with the list of users
+        res.status(200).json({ posts });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ success: false, msg: 'Internal Server Error' });
+    }
+}
+
+async function getAllPosts(req, res) {
+    
+    try {
+        const posts = await Post.find({
+            
+        });
 
         if (!posts || posts.length === 0) {
             return res.status(404).json({ success: false, msg: 'No posts found' });
@@ -43,48 +89,50 @@ async function getAllPosts(req, res) {
 }
 
 async function getPostByUserId(req, res) {
-    const userId = req.params.userId; 
+    const { userId } = req.params;
 
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, msg: "User not found" });
-        }
-
-        const posts = await Post.find({ user: userId }); 
-        if (posts.length === 0) {
-            return res.status(400).json({ success: false, msg: "This user has created no posts" });
-        }
-
-        return res.status(200).json({
-            success: true,
-            data: posts,
-        });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ success: false, msg: "Server error" });
+    if (!userId) {
+        return res.status(400).json({ success: false, msg: 'UserId is required' });
     }
 
+    try { 
+        const posts = await Post.find({
+            $or: [
+                { user: userId }, 
+                { 'collaborators.userId': userId },
+                { visibility: 'public' }
+            ]
+        }).populate('collaborators.userId', 'username email');
+
+        if (posts.length === 0) {
+            return res.status(404).json({ success: false, msg: 'No posts found for this user' });
+        }
+
+        res.status(200).json({ success: true, posts });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ success: false, msg: 'Internal Server Error' });
+    }
 }
 
 
-async function updatePost(req,res){
+async function updatePost(req, res) {
     const postId = req.params.postId;
-    const {content, visibility} = req.body;
+    const { content, visibility } = req.body;
 
-    if(!postId || !content || !visibility){
-        return res.status(400).json({success: false,msg:"all fields are required"})
+    if (!postId || !content || !visibility) {
+        return res.status(400).json({ success: false, msg: "all fields are required" })
     }
 
     try {
         const posts = await Post.findByIdAndUpdate(
             postId,
-            {content, visibility},
-            {new: true}
+            { content, visibility },
+            { new: true }
         );
 
-        if(!posts){
-            return res.status(400).json({success: false,msg:"post not exist"})
+        if (!posts) {
+            return res.status(400).json({ success: false, msg: "post not exist" })
         }
 
         return res.status(200).json({ success: true, msg: "Post updated successfully", posts });
@@ -94,19 +142,19 @@ async function updatePost(req,res){
     }
 }
 
-async function deletePostById(req, res){
-    const {postId} = req.params;
+async function deletePostById(req, res) {
+    const { postId } = req.params;
 
-    if(!postId) {
-        return res.status(400).json({success: false,msg:"Post id required"})
+    if (!postId) {
+        return res.status(400).json({ success: false, msg: "Post id required" })
     }
     try {
         const post = await Post.findByIdAndDelete(postId);
-        if(!post){
-            return res.status(400).json({success: false,msg:"post with this id not exist"})
+        if (!post) {
+            return res.status(400).json({ success: false, msg: "post with this id not exist" })
         }
 
-        return res.status(200).json({success: true,msg: 'post deleted successfully'})
+        return res.status(200).json({ success: true, msg: 'post deleted successfully' })
 
 
     } catch (error) {
@@ -117,8 +165,9 @@ async function deletePostById(req, res){
 
 module.exports = {
     createPost,
-    getAllPosts,
+    getAllPublicPosts,
     getPostByUserId,
     updatePost,
-    deletePostById
+    deletePostById,
+    getAllPosts
 }

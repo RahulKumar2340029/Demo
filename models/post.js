@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    visibility:{
+    visibility: {
         type: String,
-        default: 'public',
-        enum: ['public','private'],
+        default: 'private',
+        enum: ['public', 'private'],
         required: true,
     },
     content: {
@@ -15,18 +15,31 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-    }
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now,
-    // },
-    // updatedAt: {
-    //     type: Date,
-    //     default: Date.now,
-    // }
-
-},{
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    collaborators: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true, 
+            
+        },
+    }],
+    secret_visible_to:[{
+        email:{
+            type: String,
+            required: true,
+        }
+    }]
+}, {
     timestamps: true,
-})
+});
 
-module.exports = mongoose.model('Post',postSchema);
+module.exports = mongoose.model('Post', postSchema);

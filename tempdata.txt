@@ -71,3 +71,74 @@ post id 678685877dfe19605b055cd7
     
 
     aman= http://localhost:3000/user/details?id=678691593a48b460394992f8
+
+
+
+    {
+    "users": [
+        {
+            "_id": "6786325f0f3dceae35c2ed80",
+            "username": "rahul",
+            "email": "abc@gmail.com",
+            "createdAt": "2025-01-14T09:46:07.576Z",
+            "updatedAt": "2025-01-14T09:46:07.576Z",
+            "__v": 0
+        },
+        {
+            "_id": "678691593a48b460394992f8",
+            "username": "rohit",
+            "email": "abcdd@gmail.com",
+            "createdAt": "2025-01-14T16:31:21.636Z",
+            "updatedAt": "2025-01-16T12:13:58.315Z",
+            "__v": 0
+        },
+        {
+            "_id": "6788f471384b63bcef217a2f",
+            "username": "uditj",
+            "email": "abcd@gmail.com",
+            "createdAt": "2025-01-16T11:58:41.461Z",
+            "updatedAt": "2025-01-16T11:58:41.461Z",
+            "__v": 0
+        },
+        {
+            "_id": "678bdbceb8c8a4568c8f7ef3",
+            "username": "rohit",
+            "email": "zyx@gmail.com",
+            "createdAt": "2025-01-18T16:50:22.851Z",
+            "updatedAt": "2025-01-18T16:50:22.851Z",
+            "__v": 0
+        },
+        {
+            "_id": "678bdc12a7eba01fc37fa39d",
+            "username": "rohit",
+            "email": "zydx@gmail.com",
+            "createdAt": "2025-01-18T16:51:30.950Z",
+            "updatedAt": "2025-01-18T16:51:30.950Z",
+            "__v": 0
+        },
+        {
+            "_id": "678bdcb7c0198f595e8c3e73",
+            "username": "rohit",
+            "email": "zyddx@gmail.com",
+            "createdAt": "2025-01-18T16:54:15.492Z",
+            "updatedAt": "2025-01-18T16:54:15.492Z",
+            "__v": 0
+        },
+        {
+            "_id": "678be90d4a228d71ec62106a",
+            "username": "spiderre",
+            "email": "karnrahul786@gmail.com",
+            "createdAt": "2025-01-18T17:46:53.445Z",
+            "updatedAt": "2025-01-18T17:46:53.445Z",
+            "__v": 0
+        },
+        {
+            "_id": "678c0881a863ac2fb0fa2c48",
+            "username": "username",
+            "email": "username@gmail.com",
+            "createdAt": "2025-01-18T20:01:05.709Z",
+            "updatedAt": "2025-01-18T20:01:05.709Z",
+            "__v": 0
+        }
+    ]
+}

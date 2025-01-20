@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const {registerUser, updateProfile, deleteProfile, signIn, getDetails} = require('../controllers/user.controller');
+const authMiddleware = require('../Authentication/Authentication');
 const User = require('../models/user');
 
 router.get('/', async (req, res) => {
@@ -22,10 +23,10 @@ router.post('/register',registerUser)
 
 router.post('/signin',signIn)
 
-router.delete('/remove',deleteProfile)
+router.delete('/delete',authMiddleware,deleteProfile)
 
-router.get('/details',getDetails)
+router.get('/details',authMiddleware,getDetails)
 
-router.put('/update',updateProfile)
+router.put('/update',authMiddleware,updateProfile)
 
 module.exports = router;

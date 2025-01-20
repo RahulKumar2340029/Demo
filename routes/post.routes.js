@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router();
-const {getAllPosts, createPost, getPostByUserId, updatePost, deletePostById} = require('../controllers/post.controller')
+const {getAllPublicPosts, createPost, getPostByUserId, updatePost, deletePostById, getAllPosts} = require('../controllers/post.controller')
 
-router.get('/',getAllPosts)
+router.get('/',getAllPublicPosts)
+
+router.get('/private', getAllPosts);
 
 router.get('/read/:userId',getPostByUserId)
 
@@ -11,5 +13,7 @@ router.post('/create',createPost)
 router.put('/update/:postId',updatePost)
 
 router.delete('/delete/:postId',deletePostById)
+
+
 
 module.exports = router;
